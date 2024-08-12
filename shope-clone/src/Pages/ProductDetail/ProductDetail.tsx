@@ -9,11 +9,13 @@ import { Product } from "src/types/product.type";
 import {
     formatCurrency,
     formatNumberToSocialStyle,
+    getIdFromNameId,
     rateSale,
 } from "src/utils/utils";
 
 export default function ProductDetail() {
-    const { id } = useParams();
+    const { nameId } = useParams();
+    const id = getIdFromNameId(nameId as string);
     const { data: ProductDetailData } = useQuery({
         queryKey: ["product", id],
         queryFn: () => productApi.getProductDetail(id as string),

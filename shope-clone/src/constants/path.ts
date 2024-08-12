@@ -1,10 +1,10 @@
 const path = {
-  home: '/',
-  profile: '/profile',
-  register: '/register',
-  login: '/login',
-  logout: '/logout',
-  productDetail: '/:id'
-} as const
+    home: "/",
+    profile: "/profile",
+    register: "/register",
+    login: "/login",
+    logout: "/logout",
+    productDetail: "/:nameId",
+} as const;
 
-export default path
+export default path;
