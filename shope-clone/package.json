@@ -5,12 +5,13 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
-    "lint": "eslint  --ext ts,tsx src/",
+    "build": "tsc && vite build",
     "preview": "vite preview",
-    "lint:fix": "eslint --fix --ext ts,tsx src/",
+    "lint": "eslint \"src/**/*.{ts,tsx}\"",
+    "lint:fix": "eslint --fix \"src/**/*.{ts,tsx}\"",
     "prettier": "prettier --check \"src/**/(*.tsx|*.ts|*.css|*.scss)\"",
-    "prettier:fix": "prettier --write \"src/**/(*.tsx|*.ts|*.css|*.scss)\""
+    "prettier:fix": "prettier --write \"src/**/(*.tsx|*.ts|*.css|*.scss)\"",
+    "test": "vitest"
   },
   "dependencies": {
     "@floating-ui/react-dom-interactions": "^0.13.3",
@@ -32,6 +33,7 @@
     "yup": "^1.4.0"
   },
   "devDependencies": {
+    "@eslint/js": "^9.9.0",
     "@types/dompurify": "^3.0.5",
     "@types/lodash": "^4.17.7",
     "@types/node": "^20.14.11",
@@ -41,19 +43,19 @@
     "@typescript-eslint/parser": "^7.16.1",
     "@vitejs/plugin-react": "^4.3.1",
     "autoprefixer": "^10.4.19",
-    "eslint": "^9.7.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-import": "^2.29.1",
     "eslint-plugin-jsx-a11y": "^6.9.0",
     "eslint-plugin-prettier": "^5.2.1",
     "eslint-plugin-react": "^7.35.0",
-    "eslint-plugin-react-hooks": "^4.6.2",
     "eslint-plugin-react-refresh": "^0.4.7",
+    "globals": "^15.9.0",
     "postcss": "^8.4.39",
     "prettier": "^3.3.3",
     "prettier-plugin-tailwindcss": "^0.6.5",
     "tailwindcss": "^3.4.6",
     "typescript": "^5.2.2",
+    "typescript-eslint": "^8.0.1",
     "vite": "^5.3.4"
   }
 }
