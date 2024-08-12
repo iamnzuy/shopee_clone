@@ -20,6 +20,7 @@
     "@tanstack/react-query-devtools": "^5.51.11",
     "axios": "^1.7.2",
     "classnames": "^2.5.1",
+    "dompurify": "^3.1.6",
     "framer-motion": "^11.3.18",
     "lodas": "^1.2.0",
     "lodash": "^4.17.21",
@@ -31,6 +32,7 @@
     "yup": "^1.4.0"
   },
   "devDependencies": {
+    "@types/dompurify": "^3.0.5",
     "@types/lodash": "^4.17.7",
     "@types/node": "^20.14.11",
     "@types/react": "^18.3.3",
