@@ -21,7 +21,7 @@ function RejectedRoute() {
 }
 
 export default function useRouteElement() {
-  let routeElement = useRoutes([
+  const routeElement = useRoutes([
     {
       path: '',
       element: <ProtectedRoute />,
