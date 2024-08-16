@@ -63,7 +63,6 @@ export default function Register() {
           //     type: 'Server'
           //   })
         }
-        console.log(error)
       }
     })
   })

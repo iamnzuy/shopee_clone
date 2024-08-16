@@ -50,7 +50,6 @@ export default function Login() {
             })
           }
         }
-        console.log(error)
       }
     })
   })
