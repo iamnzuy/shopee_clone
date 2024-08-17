@@ -106,8 +106,8 @@ export default function Register() {
                 <Button
                   type='submit'
                   className='flex  w-full items-center justify-center bg-red-500 py-4 px-2 text-sm uppercase text-white hover:bg-red-600'
-                  // isLoading={registerAccountMutation.isLoading}
-                  // disabled={registerAccountMutation.isLoading}
+                  isLoading={registerAccountMutation.isPending}
+                  disabled={registerAccountMutation.isPending}
                 >
                   Đăng ký
                 </Button>

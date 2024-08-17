@@ -14,7 +14,7 @@ export default function QuantityController({
   onIncrease,
   onDecrease,
   onType,
-  classNameWrapper = 'ml-10',
+  classNameWrapper,
   value = '',
   ...rest
 }: Props) {
