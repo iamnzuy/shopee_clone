@@ -1,4 +1,4 @@
-import { useQuery } from '@tanstack/react-query'
+import { useMutation, useQuery } from '@tanstack/react-query'
 import { Link } from 'react-router-dom'
 import purchaseApi from 'src/apis/purchase.api'
 import path from 'src/constants/path'
@@ -8,46 +8,71 @@ import QuantityController from '../ProductDetail/QuantityController'
 import Button from 'src/components/Button'
 import React, { useEffect, useState } from 'react'
 import { Purchase } from 'src/types/purchase.type'
-import { produce, product } from 'immer'
+import { produce } from 'immer'
+import { keyBy } from 'lodash'
 
-interface ExtendsPurchase extends Purchase {
+interface ExtendedPurchases extends Purchase {
   disable: boolean
   checked: boolean
 }
 
 export default function Cart() {
-  const [extendsPurchase, setExtendsPurchase] = useState<ExtendsPurchase[]>([])
-  const { data: purchasesIncartData } = useQuery({
+  const [extendedPurchases, setExtendedPurchases] = useState<ExtendedPurchases[]>([])
+  const { data: purchasesInCartData, refetch } = useQuery({
     queryKey: ['purchase', { status: purchasesStatus.inCart }],
     queryFn: () => purchaseApi.getPurchases({ status: purchasesStatus.inCart })
   })
 
-  const purchasesIncart = purchasesIncartData?.data.data
-  const isAllChecked = extendsPurchase.every((purchase) => purchase.checked)
-  useEffect(() => {
-    setExtendsPurchase(
-      purchasesIncart?.map((purchase) => ({
-        ...purchase,
-        disable: false,
-        checked: false
-      })) || []
-    )
-  }, [purchasesIncart])
+  const updatePurchaseMutation = useMutation({
+    mutationFn: purchaseApi.updatePurchase,
+    onSuccess: () => {
+      refetch()
+    }
+  })
+  const purchasesInCart = purchasesInCartData?.data.data
+  const isAllChecked = extendedPurchases.every((purchase) => purchase.checked)
 
-  const handleChecked = (productIndex: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
-    setExtendsPurchase(
+  useEffect(() => {
+    setExtendedPurchases(
+      purchasesInCart?.map((purchase) => {
+        return {
+          ...purchase,
+          disable: false,
+          checked: false
+        }
+      }) || []
+    )
+  }, [purchasesInCart])
+
+  const handleChecked = (purchaseIndex: number) => (event: React.ChangeEvent<HTMLInputElement>) => {
+    setExtendedPurchases(
       produce((draft) => {
-        draft[productIndex].checked = event.target.checked
+        draft[purchaseIndex].checked = event.target.checked
       })
     )
   }
 
+  const handleQuantity = (purchaseIndex: number, value: number, enable: boolean) => {
+    if (enable) {
+      const purchase = extendedPurchases[purchaseIndex]
+      updatePurchaseMutation.mutate({ product_id: purchase.product._id, buy_count: value })
+    }
+  }
+
   const handleCheckAll = () => {
-    setExtendsPurchase((prev) =>
+    setExtendedPurchases((prev) =>
       prev.map((purchase) => ({
         ...purchase,
         checked: !isAllChecked
       }))
+    )
+  }
+
+  const handleTypeQuantity = (purchaseIndex: number) => (value: number) => {
+    setExtendedPurchases(
+      produce((draft) => {
+        draft[purchaseIndex].buy_count = value
+      })
     )
   }
 
@@ -64,7 +89,7 @@ export default function Cart() {
                       type='checkbox'
                       className='h-5 w-5 accent-orange'
                       checked={isAllChecked}
-                      onClick={handleCheckAll}
+                      onChange={handleCheckAll}
                     />
                   </div>
                   <div className='flex-grow text-black'>Sản phẩm</div>
@@ -80,7 +105,7 @@ export default function Cart() {
               </div>
             </div>
             <div className='my-3 rounded-sm bg-white shadow p-5'>
-              {extendsPurchase?.map((purchase, index) => (
+              {extendedPurchases?.map((purchase, index) => (
                 <div
                   key={purchase._id}
                   className='mb-5 grid grid-cols-12 text-center rounded-sm border border-gray-200 bg-white py-5 px-4 text-sm text-gray-500'
@@ -127,7 +152,22 @@ export default function Cart() {
                         </div>
                       </div>
                       <div className='col-span-1'>
-                        <QuantityController max={purchase.product.quantity} value={purchase.buy_count} />
+                        <QuantityController
+                          max={purchase.product.quantity}
+                          value={purchase.buy_count}
+                          onIncrease={(value) => handleQuantity(index, value, value <= purchase.product.quantity)}
+                          onDecrease={(value) => handleQuantity(index, value, value >= 1)}
+                          onType={handleTypeQuantity(index)}
+                          onFocusOut={(value) =>
+                            handleQuantity(
+                              index,
+                              value,
+                              value <= purchase.product.quantity &&
+                                value >= 1 &&
+                                value !== (purchasesInCart as Purchase[])[index].buy_count
+                            )
+                          }
+                        />
                       </div>
                       <div className='col-span-1'>
                         <span className='text-orange'>₫{formatCurrency(purchase.price * purchase.buy_count)}</span>
@@ -149,11 +189,11 @@ export default function Cart() {
                 type='checkbox'
                 className='h-5 w-5 accent-orange'
                 checked={isAllChecked}
-                onClick={handleCheckAll}
+                onChange={handleCheckAll}
               />
             </div>
             <button className='mx-3 border-none bg-none' onClick={handleCheckAll}>
-              Chọn tất cả ({extendsPurchase.length})
+              Chọn tất cả ({extendedPurchases.length})
             </button>
             <button className='mx-3 border-none bg-none'>Xóa</button>
           </div>
