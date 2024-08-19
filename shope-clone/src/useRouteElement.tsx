@@ -35,15 +35,15 @@ export default function useRouteElement() {
               <Profile />
             </MainLayout>
           )
+        },
+        {
+          path: path.cart,
+          element: (
+            <CartLayout>
+              <Cart />
+            </CartLayout>
+          )
         }
-        // {
-        //   path: path.cart,
-        //   element: (
-        //     <CartLayout>
-        //       <Cart />
-        //     </CartLayout>
-        //   )
-        // }
       ]
     },
     {
@@ -53,14 +53,6 @@ export default function useRouteElement() {
         <MainLayout>
           <ProductList />
         </MainLayout>
-      )
-    },
-    {
-      path: path.cart,
-      element: (
-        <CartLayout>
-          <Cart />
-        </CartLayout>
       )
     },
     {
