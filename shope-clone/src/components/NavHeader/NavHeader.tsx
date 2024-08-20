@@ -3,14 +3,13 @@ import Popover from '../Popover'
 import { AppContext } from 'src/contexts/app.context'
 import { Link } from 'react-router-dom'
 import path from 'src/constants/path'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import authApi from 'src/apis/auth.api'
-import { queryClient } from 'src/main'
 import { purchasesStatus } from 'src/constants/purchases'
 
 export default function NavHeader() {
   const { profile, isAuthenticated, setIsAuthenticated, setProfile } = useContext(AppContext)
-
+  const queryClient = useQueryClient()
   const logoutMutation = useMutation({
     mutationFn: authApi.logout,
     onSuccess: () => {
@@ -66,7 +65,6 @@ export default function NavHeader() {
       </Popover>
       {isAuthenticated && (
         <Popover
-          as='span'
           className='flex items-center py-1 hover:text-gray-300 cursor-pointer ml-6'
           renderPopover={
             <div className='bg-white relative shadow-md rounded-sm border border-gray-200'>

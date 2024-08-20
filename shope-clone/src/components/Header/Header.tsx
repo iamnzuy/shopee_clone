@@ -33,7 +33,6 @@ export default function Header() {
     <div className='pb-5 pt-2 bg-[linear-gradient(-180deg,#f53d2d,#f63)] text-white'>
       <div className='container'>
         <NavHeader />
-
         <div className='grid grid-cols-12 gap-4 mt-4 items-center'>
           <Link to={path.home} className='col-span-2'>
             <svg viewBox='0 0 192 65' className='h-11 w-full fill-white'>
