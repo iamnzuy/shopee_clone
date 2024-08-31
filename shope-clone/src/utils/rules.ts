@@ -1,9 +1,9 @@
-import { RegisterOptions, UseFormGetValues } from 'react-hook-form'
+// import { RegisterOptions, UseFormGetValues } from 'react-hook-form'
 import * as yup from 'yup'
 
-type Rules = {
-  [key in 'email' | 'password' | 'confirm_password']?: RegisterOptions
-}
+// type Rules = {
+//   [key in 'email' | 'password' | 'confirm_password']?: RegisterOptions
+// }
 
 // export const getRules = (getValues?: UseFormGetValues<any>): Rules => ({
 //     email: {
@@ -60,6 +60,15 @@ type Rules = {
 //     },
 // });
 
+const handleConfirmPasswordYup = (refString: string) => {
+  return yup
+    .string()
+    .required('Bắt buộc nhập lại password')
+    .max(160, 'Password không quá 160 ký tự')
+    .min(6, 'Password không ít hơn 5 ký tự')
+    .oneOf([yup.ref(refString)], 'Nhập lại password không khớp')
+}
+
 function textPriceMinMax(this: yup.TestContext<yup.AnyObject>) {
   const { price_min, price_max } = this.parent as {
     price_min: string
@@ -83,12 +92,7 @@ export const schema = yup.object({
     .required('Bắt buộc nhập password')
     .max(160, 'Password không quá 160 ký tự')
     .min(6, 'Password không ít hơn 5 ký tự'),
-  confirm_password: yup
-    .string()
-    .required('Bắt buộc nhập lại password')
-    .max(160, 'Password không quá 160 ký tự')
-    .min(6, 'Password không ít hơn 5 ký tự')
-    .oneOf([yup.ref('password')], 'Nhập lại password không khớp'),
+  confirm_password: handleConfirmPasswordYup('password'),
   price_min: yup.string().test({
     name: 'price-not-allow',
     message: 'Giá không phù hợp',
@@ -108,10 +112,11 @@ export const userSchema = yup.object({
   address: yup.string().max(20, 'Độ dài tối đa là 20 ký tự'),
   avatar: yup.string().max(1000, 'Độ dài tối đa là 1000 ký tự'),
   date_of_birth: yup.date().max(new Date(), 'Chọn một ngày trong quá khứ'),
-  password: schema.fields['password'],
-  newPassword: schema.fields['password'],
-  confirmPassword: schema.fields['confirm_password']
+  password: schema.fields['password'] as yup.StringSchema<string | undefined, yup.AnyObject, undefined, ''>,
+  new_password: schema.fields['password'] as yup.StringSchema<string | undefined, yup.AnyObject, undefined, ''>,
+  confirm_password: handleConfirmPasswordYup('new_password')
 })
 
 export type userSchema = yup.InferType<typeof userSchema>
+export type UserSchema = yup.InferType<typeof userSchema>
 export type Schema = yup.InferType<typeof schema>

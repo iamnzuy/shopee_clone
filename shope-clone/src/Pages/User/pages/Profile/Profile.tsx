@@ -6,7 +6,7 @@ import userApi from 'src/apis/user.api'
 import Button from 'src/components/Button'
 import Input from 'src/components/Input'
 import InputNumber from 'src/components/InputNumber'
-import { userSchema } from 'src/utils/rules'
+import { UserSchema, userSchema } from 'src/utils/rules'
 import DateSelect from '../../components/DateSelect'
 import { toast } from 'react-toastify'
 import { AppContext } from 'src/contexts/app.context'
@@ -15,7 +15,7 @@ import { getAvatarURL, isAxiosUnprocessableEntityError } from 'src/utils/utils'
 import { ErrorResponse } from 'src/types/utils.type'
 import InputFile from '../../components/InputFile'
 
-type FormData = Pick<userSchema, 'name' | 'address' | 'avatar' | 'phone' | 'date_of_birth'>
+type FormData = Pick<UserSchema, 'name' | 'address' | 'avatar' | 'phone' | 'date_of_birth'>
 type FormDataError = Omit<FormData, 'data_of_birth'> & {
   date_of_birth?: string
 }
