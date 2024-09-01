@@ -5,7 +5,7 @@ import Login from './Pages/Login'
 import RegisterLayout from './Layouts/RegisterLayout'
 import MainLayout from './Layouts/MainLayout'
 import Profile from './Pages/User/pages/Profile'
-import { useContext } from 'react'
+import { Suspense, useContext } from 'react'
 import { AppContext } from './contexts/app.context'
 import path from './constants/path'
 import ProductDetail from './Pages/ProductDetail'
@@ -57,7 +57,11 @@ export default function useRouteElement() {
             },
             {
               path: path.historyPurchase,
-              element: <HistoryPurchase />
+              element: (
+                <Suspense>
+                  <HistoryPurchase />
+                </Suspense>
+              )
             }
           ]
         }

@@ -40,14 +40,6 @@ export default function ChangePassword() {
     } catch (error) {
       if (isAxiosUnprocessableEntityError<ErrorResponse<FormData>>(error)) {
         const formError = error.response?.data.data
-        // if (formError) {
-        //   Object.keys(formError).forEach((key) => {
-        //     setError(key as keyof FormData, {
-        //       message: formError[key as keyof FormData],
-        //       type: 'Server'
-        //     })
-        //   })
-        // }
         if (formError) {
           Object.keys(formError).forEach((key) => {
             setError(key as keyof FormData, {

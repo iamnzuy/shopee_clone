@@ -8,7 +8,7 @@ const path = {
   productDetail: '/:nameId',
   cart: '/cart',
   changePassword: '/user/password',
-  historyPurchase: 'user/purchase'
+  historyPurchase: '/user/purchase'
 } as const
 
 export default path
