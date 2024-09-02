@@ -61,12 +61,11 @@ export default function Login() {
           <div className='lg:col-span-2 lg:col-start-4'>
             <form className='p-10 rounded bg-white shadow-sm' onSubmit={onSubmit} noValidate>
               <div className='text-2xl'>Đăng nhập</div>
-              <div className='mt-8'></div>
               <Input
                 name='email'
                 register={register}
                 type='email'
-                className='p-3 w-full outline-none border border-gray-300 focus:border-gray-500 rounded-sm focus: shadow-sm'
+                className='mt-8'
                 errorMessage={errors.email?.message}
                 placeholder='Email'
               />
@@ -74,7 +73,7 @@ export default function Login() {
                 name='password'
                 register={register}
                 type='password'
-                className='p-3 w-full outline-none border border-gray-300 focus:border-gray-500 rounded-sm focus: shadow-sm'
+                className='mt-2'
                 errorMessage={errors.password?.message}
                 placeholder='Nhập mật khẩu'
                 autoComplete='on'
@@ -82,7 +81,7 @@ export default function Login() {
               <div className='mt-3'>
                 <Button
                   type='submit'
-                  className='flex  w-full items-center justify-center bg-red-500 py-4 px-2 text-sm uppercase text-white hover:bg-red-600'
+                  className='flex w-full items-center justify-center bg-red-500 py-4 px-2 text-sm uppercase text-white hover:bg-red-600'
                   isLoading={loginAccountMutation.isPending}
                   disabled={loginAccountMutation.isPending}
                 >
@@ -90,7 +89,7 @@ export default function Login() {
                 </Button>
               </div>
               <div className='flex item-center justify-center mt-8'>
-                <span className='text-gray-300'>Bạn mới biết đến Shopee?</span>
+                <span className='text-gray-400'>Bạn mới biết đến Shopee?</span>
                 <Link to={path.register} className='text-orange ml-1'>
                   Đăng ký
                 </Link>

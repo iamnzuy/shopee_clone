@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useRef } from 'react'
 import { toast } from 'react-toastify'
 import { Fragment } from 'react/jsx-runtime'
 import { config } from 'src/constants/config'

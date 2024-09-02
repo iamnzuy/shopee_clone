@@ -79,7 +79,7 @@ export default function Register() {
                   name='email'
                   register={register}
                   type='email'
-                  className='p-3 w-full outline-none border border-gray-300 focus:border-gray-500 rounded-sm focus: shadow-sm'
+                  className='mt-8'
                   errorMessage={errors.email?.message}
                   placeholder='Email'
                 />
@@ -87,7 +87,7 @@ export default function Register() {
                   name='password'
                   register={register}
                   type='password'
-                  className='p-3 w-full outline-none border border-gray-300 focus:border-gray-500 rounded-sm focus: shadow-sm'
+                  className='mt-2'
                   errorMessage={errors.password?.message}
                   placeholder='Nhập mật khẩu'
                   autoComplete='on'
@@ -96,7 +96,7 @@ export default function Register() {
                   name='confirm_password'
                   register={register}
                   type='password'
-                  className='p-3 w-full outline-none border border-gray-300 focus:border-gray-500 rounded-sm focus: shadow-sm'
+                  className='mt-2'
                   errorMessage={errors.confirm_password?.message}
                   placeholder='Nhập lại mật khẩu'
                   autoComplete='on'

@@ -1,4 +1,3 @@
-import Footer from 'src/components/Footer'
 import UserSideNav from '../../components/UserSideNav'
 import { Outlet } from 'react-router-dom'
 
